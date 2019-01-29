@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>Dojo Survey</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+        <style>
+            #wrapper {
+                background-color: lightgrey;
+                height: 650px;
+                padding-top: 15px;
+            }
+            #main {
+                background-color: rgb(129, 206, 231);
+                padding: 20px;
+                padding-bottom: 10px;
+                width: 530px;
+                height: 450px;
+                padding-left: 40px;
+                margin: auto;
+                border-radius: 10px;
+                font-size: 18px;
+            }
+            h2 {
+                text-align: center;
+                text-decoration: underline;
+                padding-bottom: 20px;
+            }
+            textarea {
+                width: 400px;
+                height: 80px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "wrapper">
+            <div id = "main">
+                <h2>Dojo Survey</h2>
+                <form action = '/process' method = 'post'>
+                    Your Name: <input type = 'text' name = 'name'>
+                    <br>
+                    <br>
+                    
+                    Dojo Location: 
+                    <select name = "location">
+                        <option value = "San Jose">San Jose</option>
+                        <option value = "Seattle">Seattle</option>
+                        <option value = "Los Angeles">Los Angeles</option>
+                        <option value = "Dallas">Dallas</option>
+                        <option value = "Tysons Corner">Tysons Corner</option>
+                        <option value = "Chicago">Chicago</option>
+                        <option value = "Tulsa">Tulsa</option>
+                        <option value = "East Bay">East Bay</option>
+                    </select>
+                    <br>
+                    <br>
+                    
+                    Favorite Language: 
+                    <select name = "language">
+                        <option value = "Java">Java</option>
+                        <option value = "Python">Python</option>
+                        <option value = ".NET/C#">.NET/C#</option>
+                        <option value = "Ruby">Ruby on Rails</option>
+                        <option value = "MEAN">MEAN</option>
+                        <option value = "iOS Swift">iOS Swift</option>
+                    </select>
+                    <br>
+                    <br>
+                    
+                    Comment: (Optional)
+                    <br>
+                    <textarea name = "comment"></textarea>
+                    <br>
+                    <br>
+                    <input type = 'submit' value = 'Submit'>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

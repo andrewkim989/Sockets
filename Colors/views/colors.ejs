@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Real-Time Colors</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type = "text/javascript" src = "/socket.io/socket.io.js"></script>
+        <script type ="text/javascript">
+            $(document).ready(function (){
+                var socket = io();
+                
+                $('#lightblue').submit(function(){
+                    socket.emit("color1");
+                    return false;
+                });
+                $('#lightpurple').submit(function(){
+                    socket.emit("color2");
+                    return false;
+                });
+                $('#lightpink').submit(function(){
+                    socket.emit("color3");
+                    return false;
+                });
+                socket.on('background', function(data){
+                    $("#main").css("background-color", data);
+                });
+            })
+        </script>
+        <style>
+            #main {
+                margin: auto;
+                text-align: center;
+                height: 640px;
+                background-color: white;
+            }
+            h1 {
+                padding: 20px;
+            }
+            input[type = "submit"] {
+                background-color: lightgrey;
+                border: none;
+                padding: 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "main">
+            <h1>Click the buttons below to change the background color</h1>
+            <form id = "lightblue">
+                <input type = "submit" value = "Light Blue">
+            </form>
+            <form id = "lightpurple">
+                <input type = "submit" value = "Light Green">
+            </form>
+            <form id = "lightpink">
+                <input type = "submit" value = "Light Pink">
+            </form>
+        </div>
+    </body>
+</html>

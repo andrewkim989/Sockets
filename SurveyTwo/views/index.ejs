@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>Dojo Survey Two</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type = "text/javascript" src = "/socket.io/socket.io.js"></script>
+        <script type = "text/javascript">
+            $(document).ready(function (){
+                var socket = io();
+                $('#survey').submit(function(){
+                    socket.emit('posting_form', {"name": $('#name').val(), "location": $('#location').val(),
+                    "language": $('#language').val(), "comment": $('#comment').val()});
+                    return false;
+                });
+                socket.on('updated_message', function (data) {
+                    console.log(data.info);
+                    document.getElementById("display").innerHTML = 
+                    "<p>You emitted the following information to the server:<br><br><b>Name:</b> "
+                    + data.info.name + "<br><b>Location:</b> " + data.info.location +
+                    "<br><b>Language:</b> " + data.info.language + "<br><b>Comment:</b> " +
+                    data.info.comment + "</p>";
+                });
+                socket.on('random_number', function (number) {
+                    console.log(number);
+                    document.getElementById("display").innerHTML +=
+                    "<p>Your lucky number emitted by the server is: <b>" + number.number + "</b>.</p>";
+                });
+            })
+        </script>
+
+        <style>
+            #wrapper {
+                background-color: lightgrey;
+                padding: 25px;
+            }
+            #main {
+                background-color: rgb(129, 206, 231);
+                padding: 20px;
+                padding-bottom: 10px;
+                width: 530px;
+                height: 450px;
+                padding-left: 40px;
+                margin: auto;
+                border-radius: 10px;
+                font-size: 18px;
+            }
+            h2 {
+                text-align: center;
+                text-decoration: underline;
+                padding-bottom: 20px;
+            }
+            textarea {
+                width: 400px;
+                height: 80px;
+            }
+            #display {
+                background-color: rgb(142, 214, 171);
+                width: 530px;
+                margin: 10px;
+                margin: auto;
+                border-radius: 10px;
+                font-size: 18px;
+            }
+            #display p{
+                padding: 20px;
+                word-wrap: break-word;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "wrapper">
+            <div id = "display"></div>
+            <div id = "main">
+                <h2>Dojo Survey</h2>
+                <form method = 'post' id = "survey">
+                    Your Name: <input type = 'text' name = 'name' id = "name">
+                    <br>
+                    <br>
+                    
+                    Dojo Location: 
+                    <select name = "location" id = "location">
+                        <option value = "San Jose">San Jose</option>
+                        <option value = "Seattle">Seattle</option>
+                        <option value = "Los Angeles">Los Angeles</option>
+                        <option value = "Dallas">Dallas</option>
+                        <option value = "Tysons Corner">Tysons Corner</option>
+                        <option value = "Chicago">Chicago</option>
+                        <option value = "Tulsa">Tulsa</option>
+                        <option value = "East Bay">East Bay</option>
+                    </select>
+                    <br>
+                    <br>
+                    
+                    Favorite Language: 
+                    <select name = "language" id = "language">
+                        <option value = "Java">Java</option>
+                        <option value = "Python">Python</option>
+                        <option value = ".NET/C#">.NET/C#</option>
+                        <option value = "Ruby">Ruby on Rails</option>
+                        <option value = "MEAN">MEAN</option>
+                        <option value = "iOS Swift">iOS Swift</option>
+                    </select>
+                    <br>
+                    <br>
+                    
+                    Comment: (Optional)
+                    <br>
+                    <textarea name = "comment" id = "comment"></textarea>
+                    <br>
+                    <br>
+                    <input type = 'submit' value = 'Submit'>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

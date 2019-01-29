@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Notifications</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type = "text/javascript" src = "/socket.io/socket.io.js"></script>
+
+    <script type = "text/javascript">
+        $(document).ready(function () {
+            var socket = io();
+
+            socket.on("showAll", function (message) {
+                $("#messages").show();
+            });
+            socket.on("newUserIsHere", function (data) {
+                $("#messages").append("<p>Socket ID <b>" + data + "</b> has entered the site!</p>");
+            });
+
+            $("#notify").submit(function(){
+                socket.emit("notifyAll");
+                return false;
+            });
+            socket.on("sendNotification", function (data) {
+                $("#messages").append("<p>Socket ID <b>" + data + "</b> has sent a notification!</p>");
+            });
+
+            socket.on("userDisconnected", function (data) {
+                $("#messages").append("<p>Socket ID <b>" + data + "</b> has left the site!</p>");
+            });
+        });
+    </script>
+    <style>
+        #wrapper {
+            background-color: lightgrey;
+            height: 650px;
+            text-align: center;
+        }
+        input[type = "submit"] {
+            background-color: rgb(41, 84, 201);
+            border: none;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 10px;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            padding-top: 20px;
+        }
+        #messages {
+            background-color: white;
+            text-align: left;
+			width: 480px;
+			padding: 10px;
+			border-style: solid;
+			border-width: 1px;
+			height: 400px;
+            margin: 15px;
+            margin: auto;
+			overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id = "wrapper">
+        <h1>Notifications Dashboard</h1>
+
+        <form id = "notify">
+            <input type = "submit" value = "Send notification!">
+        </form>
+
+        </form>
+        <div id = "messages">
+            <% for (var i = 0; i < messages.length; i++) { %>
+                <p><%= messages[i] %></p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
